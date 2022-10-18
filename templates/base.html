@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Index</title>
+    <title>Магазин Chlenomylo</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -45,14 +45,14 @@ https://templatemo.com/tm-546-sixteen-clothing
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>chlenomylo</h2></a>
+          <a class="navbar-brand" href="{% url 'index' %}"><h2>chlenomylo</h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'index' %}">Home
+                <a class="nav-link" href="{% url 'index' %}">Главная
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
@@ -60,10 +60,10 @@ https://templatemo.com/tm-546-sixteen-clothing
                 <a class="nav-link" href="products.html">Our Products</a>
               </li> -->
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                <a class="nav-link" href="{% url 'about' %}">О магазине</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+                <a class="nav-link" href="{% url 'contact' %}">Контакты</a>
               </li>
             </ul>
           </div>
@@ -81,7 +81,13 @@ https://templatemo.com/tm-546-sixteen-clothing
         <div class="row">
           <div class="col-md-12">
             <div class="inner-content">
-              <p>Copyright &copy; 2022 chlenomylo
+              <p>
+                Chlenomylo — изделия ручной работы <br>
+                Использование текстовых и фото материалов без прямой ссылки на сайт 
+                chlenomylo.pythonanywhere.com ЗАПРЕЩЕНО. <br>
+                © Chlenomylo 2022</p>
+
+              <!-- <p>Copyright &copy; 2022 chlenomylo</p> -->
             </div>
           </div>
         </div>
