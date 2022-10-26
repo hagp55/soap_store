@@ -1,0 +1,11 @@
+#header{
+    background-color: #5a6468;
+}
+
+.module h2, .module caption, .inline-group h2{
+    background-color: #5a6468;
+}
+
+div.breadcrumbs{
+    background-color: #313f46;
+}
