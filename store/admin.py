@@ -1,9 +1,19 @@
 from django.contrib import admin
 from .models import Product, Category
 from django.utils.safestring import mark_safe
+from ckeditor.widgets import CKEditorWidget
+from django import forms
+
+
+class ProductAdminForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Product
+        fields = '__all__'
 
 
 class ProductAdmin(admin.ModelAdmin):
+    form = ProductAdminForm
     list_display = ('title', 'category', 'is_onsale', 'get_preview_photo', )
     list_editable = ('is_onsale', 'category')
     list_filter = ('category', )
