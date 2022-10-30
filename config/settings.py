@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['Your site']
 INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'ckeditor',
+    'telebot.apps.TelebotConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

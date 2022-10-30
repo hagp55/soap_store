@@ -1,0 +1,39 @@
+<section class="product-filter-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Самые популярные</h2>
+        </div>
+        <ul class="product-filter-menu">
+            <li><a href="#">Члены</a></li>
+            <li><a href="#">Сиськи</a></li>
+            <li><a href="#">Букеты</a></li>
+            <li><a href="#">Свечи</a></li>
+            <li><a href="#">Женщина</a></li>
+        </ul>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <a href="{% url 'single_product' product.pk %}">
+                            <img src="{{ product.photo.url }}" alt="">
+                        </a>
+                        <!-- <div class="pi-links">
+                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                        </div> -->
+                    </div>
+                    <div class="pi-text">
+                        <h6>300 р.</h6>
+                        <p>{{ product.title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+        <div class="text-center pt-5">
+            <button class="site-btn sb-line sb-dark">Загрузить ещё</button>
+        </div>
+    </div>
+</section>
