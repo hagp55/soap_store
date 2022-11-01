@@ -4,10 +4,14 @@ from django.shortcuts import reverse
 
 class Category(models.Model):
     title = models.CharField(max_length=150, verbose_name = 'Название')
+    slug = models.SlugField(max_length=150, verbose_name='Url для категории', unique=True)
 
     class Meta:
-        verbose_name = 'Категория'
+        verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
+
+    def get_absolute_url(self):
+        return reverse('products_category', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title

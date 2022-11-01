@@ -7,11 +7,9 @@
                     <h2>Все продукты</h2>
                 </div>
                 <ul class="product-filter-menu">
-                    <li><a href="#">Члены</a></li>
-                    <li><a href="#">Сиськи</a></li>
-                    <li><a href="#">Букеты</a></li>
-                    <li><a href="#">Свечи</a></li>
-                    <li><a href="#">Женщина</a></li>
+                    {% for category in categories %}
+                        <li><a href="{% url 'products_category' category.pk %}">{{ category.title }}</a></li>
+                    {% endfor %}
                 </ul>
                 <div class="row">
                     {% for product in products %}

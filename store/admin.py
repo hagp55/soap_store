@@ -39,7 +39,13 @@ class ProductAdmin(admin.ModelAdmin):
     get_preview_photo.short_description = 'Миниатюра'
     get_photo.short_description = 'Фото'
 
+
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {
+        'slug': ('title',)
+    }
+
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 admin.site.site_title = 'Админка chlenomylo'
 admin.site.site_header = 'Chlenomylo'

@@ -1,13 +1,40 @@
+from multiprocessing import context
+from unicodedata import category
 from django.shortcuts import render, get_object_or_404
 from django.db.models import F
-from .models import Product
+from .models import Product, Category
 from telebot.send_message import send_telegram
 from telebot.forms import TeleBotSendMessageForm
+from django.views.generic import ListView
 
 
 def index(request):
     products = Product.objects.filter(is_onsale=True).all()
-    return render(request, 'store/index.html', {'products': products})
+    categories = Category.objects.all()
+    context = {
+        'products': products,
+        'categories': categories,
+        }
+    return render(request, 'store/index.html', context)
+
+
+class ProductsByCategoryView(ListView):
+    template_name = 'store/category.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(category__slug=self.kwargs['slug'])
+
+# def products_by_category(request, slug):
+#     products = Category.objects.get(slug=slug)
+#     print(products)
+#     context = {
+#         'products': products,
+#     }
+#     return render(request, 'store/category.html', context)    
+
+
+
 
 def single_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
