@@ -1,44 +1,28 @@
 {% load static %}
 <section class="hero-section">
     <div class="hero-slider owl-carousel">
-        <div class="hs-item set-bg" data-setbg="{% static 'img/bg.jpg' %}">
+        {% for slider in sliders %}
+        <div class="hs-item set-bg" data-setbg="{{ slider.photo.url }}">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 text-white">
-                        <span>Новое поступление</span>
-                        <h2>Мыльный член древнего мамонта</h2>
-                        <p>Порадуй свои кожанные ручки древнем членом мамонта Сашки
-                            Размер выбирай под свои руки!
-                        </p>
+                        <span>{{ slider.title|safe  }}</span>
+
+                        <p class="mt-3">{{ slider.text|safe }}</p>
                         <!-- <a href="#" class="site-btn sb-line">DISCOVER</a>
                         <a href="#" class="site-btn sb-white">ADD TO CART</a> -->
                     </div>
                 </div>
+                {% if slider.price %}
                 <div class="offer-card text-white">
                     <span>От</span>
-                    <h2>999р</h2>
+                    <h2>{{ slider.price }}р</h2>
                     <!-- <p>SHOP NOW</p> -->
                 </div>
+                {% endif %}
             </div>
         </div>
-        <div class="hs-item set-bg" data-setbg="{% static 'img/bg-2.jpg' %}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-7 text-white">
-                        <span>Новое поступление</span>
-                        <h2>Эклюзив только для Омска</h2>
-                        <p>Волосатые сиськи</p>
-                        <!-- <a href="#" class="site-btn sb-line">DISCOVER</a>
-                        <a href="#" class="site-btn sb-white">ADD TO CART</a> -->
-                    </div>
-                </div>
-                <div class="offer-card text-white">
-                    <span>От</span>
-                    <h2>999р</h2>
-                    <!-- <p>SHOP NOW</p> -->
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
     <div class="container">
         <div class="slide-num-holder" id="snh-1"></div>

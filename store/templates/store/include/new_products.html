@@ -1,0 +1,31 @@
+{% load products %}
+
+{% get_new_product as new_products %}
+<section class="top-letest-product-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Новинки</h2>
+        </div>
+        <div class="product-slider owl-carousel">
+            {% for product in new_products %}
+            <div class="product-item">
+                <div class="pi-pic">
+                    <a href="{% url 'single_product' product.pk %}">
+                        <img src="{{ product.photo.url }}" alt="">
+                    </a>
+                    <!-- <div class="pi-links">
+                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                    </div> -->
+                </div>
+                <div class="pi-text">                  
+                    {% if product.price > 0%}
+                        <h6>{{ product.price|floatformat }} р.</h6>
+                    {% endif %}
+                    <p> {{ product.title }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

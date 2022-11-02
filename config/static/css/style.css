@@ -101,8 +101,8 @@ ol {
 }
 
 .spad {
-	padding-top: 105px;
-	padding-bottom: 105px;
+	padding-top: 60px;
+	padding-bottom: 60px;
 }
 
 .text-white h1,
@@ -875,6 +875,10 @@ ol {
 	display: inline-block;
 	color: #000;
 }
+
+/* .product-item .pi-pic img{
+	max-height: 210px;
+} */
 
 .product-item .pi-links a.add-card {
 	padding-top: 8px;

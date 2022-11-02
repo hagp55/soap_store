@@ -14,11 +14,11 @@ class ProductAdminForm(forms.ModelForm):
 
 class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
-    list_display = ('title', 'category', 'is_onsale', 'get_preview_photo', )
-    list_editable = ('is_onsale', 'category')
+    list_display = ('title', 'category', 'price', 'is_onsale', 'get_preview_photo')
+    list_editable = ('is_onsale', 'category', 'price')
     list_filter = ('category', )
     search_fields = ('title', 'description')
-    fields = ('title', 'description', 'get_photo', 'photo', 'category', 'views_counter', 'is_onsale')
+    fields = ('title', 'description', 'get_photo', 'photo', 'category', 'views_counter', 'price', 'is_onsale')
     readonly_fields = ('get_photo', 'views_counter')
     
 

@@ -8,7 +8,7 @@
                 </div>
                 <ul class="product-filter-menu">
                     {% for category in categories %}
-                        <li><a href="{% url 'products_category' category.pk %}">{{ category.title }}</a></li>
+                        <li><a href="{% url 'products_category' category.slug %}">{{ category.title }}</a></li>
                     {% endfor %}
                 </ul>
                 <div class="row">
@@ -27,7 +27,9 @@
                                 </div> -->
                             </div>
                             <div class="pi-text">
-                                <h6>999 р.</h6>
+                                {% if product.price > 0%}
+                                    <h6>{{ product.price|floatformat }} р.</h6>
+                                {% endif %}
                                 <p> {{ product.title }}</p>
                             </div>
                         </div>

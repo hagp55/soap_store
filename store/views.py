@@ -1,56 +1,49 @@
-from multiprocessing import context
-from unicodedata import category
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
+from django.shortcuts import render
 from django.db.models import F
+from django.contrib import messages
+
 from .models import Product, Category
-from telebot.send_message import send_telegram
 from telebot.forms import TeleBotSendMessageForm
-from django.views.generic import ListView
+from telebot.send_message import send_telegram
+from slider.models import Slider
 
 
-def index(request):
-    products = Product.objects.filter(is_onsale=True).all()
-    categories = Category.objects.all()
-    context = {
-        'products': products,
-        'categories': categories,
-        }
-    return render(request, 'store/index.html', context)
+class HomeView(ListView):
+    template_name = 'store/index.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(is_onsale=True).all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sliders'] = Slider.objects.all()
+        context['categories'] = Category.objects.all()
+        return context
 
 
 class ProductsByCategoryView(ListView):
     template_name = 'store/category.html'
     context_object_name = 'products'
+    allow_empty = False
 
     def get_queryset(self):
-        return Product.objects.filter(category__slug=self.kwargs['slug'])
-
-# def products_by_category(request, slug):
-#     products = Category.objects.get(slug=slug)
-#     print(products)
-#     context = {
-#         'products': products,
-#     }
-#     return render(request, 'store/category.html', context)    
+        return Product.objects.filter(category__slug=self.kwargs['slug'], is_onsale=True)
 
 
+class SingleProducDetailView(DetailView):
+    model = Product
+    template_name = 'store/single_product.html'
+    context_object_name = 'product'
 
-
-def single_product(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    product.views_counter = F('views_counter') + 1
-    product.save()
-    context = {
-        'products' : Product.objects.filter(is_onsale=True).all(),
-        'product': product,
-    }
-    return render(request, 'store/single_product.html', context)
-
-
-def all_products(request):
-    products = Product.objects.filter(is_onsale=True).all()
-    return render(request, 'store/category.html', {'products': products})
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.filter(is_onsale=True).all()
+        self.object.views_counter = F('views_counter') + 1
+        self.object.save()
+        self.object.refresh_from_db()
+        return context
 
 
 def contact(request):
@@ -60,12 +53,8 @@ def contact(request):
             phone = form.cleaned_data['phone']
             # email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            send_telegram(phone, message)
+            send_telegram(request, phone, message)                
         else:
-            print('Not OK')
+            messages.error(request, 'Заполните все поля')
     form = TeleBotSendMessageForm()
     return render(request, 'store/contact.html', {'form': form})
-
-
-def page_not_found(request):
-    return render(request, '404.html')

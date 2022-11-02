@@ -30,6 +30,22 @@
 						<a href="https://m.vk.com/chlenomylo"><i class="fa-brands fa-vk"></i></a>
 						<a href="mailto:nastya-sid55@yandex.ru"><i class="fa-solid fa-square-envelope"></i></a>
 					</div>
+
+					{% if messages %}
+					{% for message in messages %}
+						{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+						  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<strong>{{ message }}</strong>
+						  </div>
+						{% else %}
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<strong>{{ message }}</strong>
+						</div>
+
+						{% endif %}
+					{% endfor %}
+			  		{% endif %}
+
 					<form method="post" class="contact-form">
 						{% csrf_token %}
 						<input type="text" placeholder="Ваше номер телефона" name="phone">

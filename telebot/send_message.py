@@ -1,8 +1,9 @@
 import requests
+from django.contrib import messages
 from .models import TeleBotSettings
 
 
-def send_telegram(phone, message):
+def send_telegram(request, phone, message):
     if TeleBotSettings.objects.get(pk=1):
         telebot_settings = TeleBotSettings.objects.get(pk=1)
         token = telebot_settings.telegram_token
@@ -29,11 +30,11 @@ def send_telegram(phone, message):
             pass
         finally:
             if response.status_code != 200:
-                print('Ошибка отправки')
+                messages.error(request, 'Ошибка отправления')
             elif response.status_code == 500:
-                print('Ошибка сервера')
+                messages.error(request, 'Ошибка отправления, проблемы на сервере')
             else:
-                print('Всё Ок сообщение отправлено!')
+                messages.success(request, 'Сообщение отправлено.')
     else:
         pass
 

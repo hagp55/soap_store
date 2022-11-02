@@ -1,14 +1,15 @@
-from tabnanny import verbose
 from django.db import models
 from django.shortcuts import reverse
 
 class Category(models.Model):
     title = models.CharField(max_length=150, verbose_name = 'Название')
     slug = models.SlugField(max_length=150, verbose_name='Url для категории', unique=True)
+    order = models.IntegerField(verbose_name='Порядок меню', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
+        ordering = ('order',)
 
     def get_absolute_url(self):
         return reverse('products_category', kwargs={'slug': self.slug})
@@ -25,8 +26,10 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now = True, verbose_name = 'Изменено')
     is_onsale = models.BooleanField(default=False, verbose_name = 'В продаже')
     views_counter = models.IntegerField(default=0, verbose_name='Количество просмотров')
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Цена', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, 
-            verbose_name='Категория', blank=True, null=True)
+            verbose_name='Категория', blank=True, null=True, related_name='products')
+
 
     class Meta:
         verbose_name = 'Продукт'
