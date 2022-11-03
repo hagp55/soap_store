@@ -2,6 +2,12 @@ Backup/
 #Local settings
 config/local_settins.py
 media/
+<<<<<<< HEAD
+=======
+slider/migrations/
+store/migrations/
+telebot/migrations/
+>>>>>>> 7cc01ca63eed32116028f7cfcb9d9af14b1ee5da
 django_cache/
 # Byte-compiled / optimized / DLL files
 __pycache__/
