@@ -1,3 +1,5 @@
+{% load tags %}
+{% load cache %}
 <section class="category-section spad">
     <div class="container">
         <div class="row">
@@ -7,9 +9,11 @@
                     <h2>Все продукты</h2>
                 </div>
                 <ul class="product-filter-menu">
-                    {% for category in categories %}
-                        <li><a href="{% url 'products_category' category.slug %}">{{ category.title }}</a></li>
-                    {% endfor %}
+
+                    {% cache 60 tags  %}
+                        {% get_tags %}
+                    {% endcache %}
+
                 </ul>
                 <div class="row">
                     {% for product in products %}
@@ -36,6 +40,7 @@
                     </div>
                     {% endfor %}
 
+                    {% include 'store/include/paginator.html'%}
                     <!-- <div class="text-center w-100 pt-3">
                         <button class="site-btn sb-line sb-dark">Загрузить ещё</button>
                     </div> -->
