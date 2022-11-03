@@ -1,7 +1,11 @@
 Backup/
 #Local settings
 config/local_settins.py
-
+media/
+slider/migrations/
+store/migrations/
+telebot/migrations/
+django_cache/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

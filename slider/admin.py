@@ -7,7 +7,7 @@ from ckeditor.widgets import CKEditorWidget
 
 class SliderAdminForm(forms.ModelForm):
     title = forms.CharField(widget=CKEditorWidget())
-    text = forms.CharField(widget=CKEditorWidget())
+    content = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = Slider
         fields = '__all__'
@@ -15,7 +15,7 @@ class SliderAdminForm(forms.ModelForm):
 
 class SliderAdmin(admin.ModelAdmin):
     form = SliderAdminForm
-    fields = ('title', 'text', 'get_photo', 'photo', 'price')
+    fields = ('title', 'content', 'get_photo', 'photo', 'price')
     readonly_fields = ('get_photo',)
 
     def get_photo(self, obj):

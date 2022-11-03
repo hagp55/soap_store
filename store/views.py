@@ -3,15 +3,16 @@ from django.shortcuts import render
 from django.db.models import F
 from django.contrib import messages
 
-from .models import Product, Category
+from .models import Product, Category, Tag
+from slider.models import Slider
 from telebot.forms import TeleBotSendMessageForm
 from telebot.send_message import send_telegram
-from slider.models import Slider
 
 
 class HomeView(ListView):
     template_name = 'store/index.html'
     context_object_name = 'products'
+    paginate_by = 18
 
     def get_queryset(self):
         return Product.objects.filter(is_onsale=True).all()
@@ -27,9 +28,30 @@ class ProductsByCategoryView(ListView):
     template_name = 'store/category.html'
     context_object_name = 'products'
     allow_empty = False
+    paginate_by = 18
 
     def get_queryset(self):
         return Product.objects.filter(category__slug=self.kwargs['slug'], is_onsale=True)
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super().get_context_data(*args, **kwargs)
+    #     context['title'] = Category.objects.get(slug=self.kwargs['slug'])
+    #     return context
+
+
+class ProductsByTagsView(ListView):
+    template_name = 'store/category.html'
+    context_object_name = 'products'
+    allow_empty = False
+    paginate_by = 18
+
+    def get_queryset(self):
+        return Product.objects.filter(tags__slug=self.kwargs['slug'], is_onsale=True)
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super().get_context_data(*args, **kwargs)
+    #     context['title'] = f'{Tag.objects.get(slug=self.kwargs["slug"])}'
+    #     return context
 
 
 class SingleProducDetailView(DetailView):
@@ -51,7 +73,6 @@ def contact(request):
         form = TeleBotSendMessageForm(request.POST)
         if form.is_valid():
             phone = form.cleaned_data['phone']
-            # email = form.cleaned_data['email']
             message = form.cleaned_data['message']
             send_telegram(request, phone, message)                
         else:

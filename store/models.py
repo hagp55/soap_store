@@ -1,9 +1,10 @@
 from django.db import models
 from django.shortcuts import reverse
 
+
 class Category(models.Model):
     title = models.CharField(max_length=150, verbose_name = 'Название')
-    slug = models.SlugField(max_length=150, verbose_name='Url для категории', unique=True)
+    slug = models.SlugField(max_length=150, verbose_name='Url для категории', unique=True, db_index=True)
     order = models.IntegerField(verbose_name='Порядок меню', blank=True, null=True)
 
     class Meta:
@@ -13,6 +14,22 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('products_category', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return self.title
+
+
+class Tag(models.Model):
+    title = models.CharField(max_length=50, verbose_name='Тэг')
+    slug = models.SlugField(max_length=50, verbose_name='Url для тэга', unique=True, db_index=True)
+
+    class Meta:
+        verbose_name = 'тэг'
+        verbose_name_plural = 'Тэги'
+        ordering = ('title',)
+
+    def get_absolute_url(self):
+        return reverse('products_tag', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title
@@ -28,8 +45,9 @@ class Product(models.Model):
     views_counter = models.IntegerField(default=0, verbose_name='Количество просмотров')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Цена', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, 
-            verbose_name='Категория', blank=True, null=True, related_name='products')
-
+                                blank=True, null=True, 
+                                verbose_name='Категория', related_name='products')
+    tags = models.ManyToManyField(Tag, blank=True, verbose_name='Тэг', related_name='products',)
 
     class Meta:
         verbose_name = 'Продукт'

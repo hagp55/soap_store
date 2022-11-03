@@ -3,7 +3,7 @@ from django.db import models
 
 class Slider(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок')
-    text = models.TextField(verbose_name='Текст')
+    content = models.TextField(verbose_name='Текст')
     photo = models.ImageField(upload_to='slider/photos/', verbose_name='Выбрать картинку')
     price = models.IntegerField(null=True, blank=True, verbose_name='Цена')
 

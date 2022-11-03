@@ -30,6 +30,12 @@ DEBUG = False
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 
 
+NAME = os.getenv('NAME')
+USER = os.getenv('USER')
+PASSWORD = os.getenv('PASSWORD')
+HOST = os.getenv('HOST')
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -81,12 +87,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': NAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': '3306',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -135,6 +154,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': BASE_DIR / 'django_cache',
+    }
+}
+
 
 try:
     from .local_settins import *
