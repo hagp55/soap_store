@@ -2,7 +2,6 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import render
 from django.db.models import F
 from django.contrib import messages
-
 from .models import Product, Category, Tag
 from slider.models import Slider
 from telebot.forms import TeleBotSendMessageForm
@@ -20,7 +19,6 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sliders'] = Slider.objects.all()
-        context['categories'] = Category.objects.all()
         return context
 
 
@@ -33,14 +31,14 @@ class ProductsByCategoryView(ListView):
     def get_queryset(self):
         return Product.objects.filter(category__slug=self.kwargs['slug'], is_onsale=True)
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super().get_context_data(*args, **kwargs)
-    #     context['title'] = Category.objects.get(slug=self.kwargs['slug'])
-    #     return context
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = f'Продукты по категории: {Category.objects.get(slug=self.kwargs["slug"])}'
+        return context
 
 
 class ProductsByTagsView(ListView):
-    template_name = 'store/category.html'
+    template_name = 'store/products_tag.html'
     context_object_name = 'products'
     allow_empty = False
     paginate_by = 18
@@ -48,10 +46,10 @@ class ProductsByTagsView(ListView):
     def get_queryset(self):
         return Product.objects.filter(tags__slug=self.kwargs['slug'], is_onsale=True)
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super().get_context_data(*args, **kwargs)
-    #     context['title'] = f'{Tag.objects.get(slug=self.kwargs["slug"])}'
-    #     return context
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = f'Продукты по тэгу: {Tag.objects.get(slug=self.kwargs["slug"])}'
+        return context
 
 
 class SingleProducDetailView(DetailView):
@@ -61,7 +59,8 @@ class SingleProducDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.filter(is_onsale=True).all()
+        category = Category.objects.filter(products=self.kwargs['pk']).first()
+        context['products'] = Product.objects.filter(category=category).all()
         self.object.views_counter = F('views_counter') + 1
         self.object.save()
         self.object.refresh_from_db()

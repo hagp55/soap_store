@@ -1,13 +1,13 @@
 from django.contrib import admin
-from django import forms
-from .models import Slider
 from django.utils.safestring import mark_safe
 from ckeditor.widgets import CKEditorWidget
+from django import forms
+from .models import Slider
 
 
 class SliderAdminForm(forms.ModelForm):
-    title = forms.CharField(widget=CKEditorWidget())
-    content = forms.CharField(widget=CKEditorWidget())
+    title = forms.CharField(label='Заголовок', required=False, widget=CKEditorWidget())
+    content = forms.CharField(label='Описание', required=False, widget=CKEditorWidget())
     class Meta:
         model = Slider
         fields = '__all__'

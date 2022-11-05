@@ -1,4 +1,3 @@
-from itertools import product
 from django import template
 from django.db.models import Count, F
 from store.models import Category

@@ -6,11 +6,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 text-white">
-                        <span>{{ slider.title|safe  }}</span>
 
+                        {% if slider.title %}
+                        <span> {{ slider.title|safe  }}</span>
+                        {% endif %}
+
+                        {% if slider.content %}
                         <p class="mt-3">{{ slider.content|safe }}</p>
                         <!-- <a href="#" class="site-btn sb-line">DISCOVER</a>
                         <a href="#" class="site-btn sb-white">ADD TO CART</a> -->
+                        {% endif %}
+                        
                     </div>
                 </div>
                 {% if slider.price %}
@@ -28,3 +34,4 @@
         <div class="slide-num-holder" id="snh-1"></div>
     </div>
 </section>
+

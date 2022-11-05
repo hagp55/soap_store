@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extrastyle %}
-    <link rel="stylesheet" href="{% static 'assets/css/admin_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_styles.css' %}">
 {% endblock %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}

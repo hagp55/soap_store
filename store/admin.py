@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Product, Category, Tag
-from django.utils.safestring import mark_safe
 from ckeditor.widgets import CKEditorWidget
+from django.utils.safestring import mark_safe
+from .models import Tag, Product, Category
 from django import forms
 
 
@@ -14,7 +14,7 @@ class ProductAdminForm(forms.ModelForm):
 
 class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
-    list_display = ('title', 'category', 'price', 'is_onsale', 'views_counter','get_preview_photo')
+    list_display = ('title', 'category', 'price', 'is_onsale','get_preview_photo')
     list_editable = ('is_onsale', 'category', 'price')
     list_filter = ('category', 'tags')
     search_fields = ('title', 'description')
@@ -52,8 +52,8 @@ class TagAdmin(admin.ModelAdmin):
     }
 
 
-admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Product, ProductAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.site_title = 'Админка chlenomylo'
 admin.site.site_header = 'Chlenomylo'
